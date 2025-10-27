@@ -105,6 +105,7 @@ public class Scanner {
                 } else {
                     addToken(SLASH);
                 }
+                break;
             case ' ':
             case '\r':
             case '\t':
@@ -162,16 +163,16 @@ public class Scanner {
         while (peek() != '"' && !isAtEnd()) {
             if (peek() == '\n') {
                 line++;
-                advance();
             }
+            advance();
         }
         if (isAtEnd()) {
-            Lox.error(line, "Undeterminated string.");
+            Lox.error(line, "Unterminated string.");
             return;
         }
         advance();
         String value = source.substring(start + 1, current - 1);
-        addToken(SLASH, value);
+        addToken(STRING, value);
     }
 
     private boolean isDigit(char c) {
@@ -181,11 +182,11 @@ public class Scanner {
     private void number() {
         while (isDigit(peek())) {
             advance();
-            if (peek() == '.' && isDigit(peekNext())) {
+        }
+        if (peek() == '.' && isDigit(peekNext())) {
+            advance();
+            while (isDigit(peek())) {
                 advance();
-                while (isDigit(peek())) {
-                    advance();
-                }
             }
         }
         addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
@@ -201,13 +202,13 @@ public class Scanner {
     private void identifier() {
         while (isAlphaNumeric(peek())) {
             advance();
-            String text = source.substring(start, current);
-            TokenType type = keywords.get(text);
-            if (type == null) {
-                type = IDENTIFIER;
-            }
-            addToken(type);
         }
+        String text = source.substring(start, current);
+        TokenType type = keywords.get(text);
+        if (type == null) {
+            type = IDENTIFIER;
+        }
+        addToken(type);
     }
 
     private boolean isAlpha(char c) {

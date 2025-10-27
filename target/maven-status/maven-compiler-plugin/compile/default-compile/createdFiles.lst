@@ -1,0 +1,4 @@
+com\borjatm\lox\TokenType.class
+com\borjatm\lox\Scanner.class
+com\borjatm\lox\Token.class
+com\borjatm\lox\Lox.class
