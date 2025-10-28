@@ -21,4 +21,4 @@ The goal is to understand how interpreters work by implementing each stage of th
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/lox-interpreter.git
+   git@github.com:BorjaTM/interpreter-framework.git
